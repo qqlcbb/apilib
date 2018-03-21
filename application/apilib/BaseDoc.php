@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | Author: linchuangbin <linchuangbin@honraytech.com>
+// | Author: linchuangbin < >
 // +----------------------------------------------------------------------
 
 namespace app\apilib;
@@ -39,7 +39,7 @@ class BaseDoc extends Common
      */
     public function main()
     {
-        echo '洪睿项目文档';
+        echo '项目文档';
 
     }
 

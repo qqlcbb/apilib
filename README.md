@@ -31,8 +31,60 @@ apilib
 ~~~
 
 ## 使用
+#### 1. 导入数据库表oa_admin_doc
+表为自关联结构，parent为上级ID。层级为两层。如下测试数据。
+```
+CREATE TABLE `oa_admin_doc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(30) DEFAULT '' COMMENT '菜单名称',
+  `parent` int(11) DEFAULT '0' COMMENT '上级ID',
+  `module` varchar(30) DEFAULT '' COMMENT '模块',
+  `controller` varchar(30) DEFAULT '' COMMENT '控制器',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='接口文档表';
 
-#### 控制器注释
+LOCK TABLES `oa_admin_doc` WRITE;
+/*!40000 ALTER TABLE `oa_admin_doc` DISABLE KEYS */;
+
+INSERT INTO `oa_admin_doc` (`id`, `name`, `parent`, `module`, `controller`)
+VALUES
+    (1,'管理模块',0,'',''),
+    (2,'用户接口',1,'admin','Users');
+```
+
+#### 2. 移动index.php文件到项目根目录，而非public
+```
+// 应用目录
+define('APP_PATH', __DIR__.'/apps/');
+// 加载框架引导文件
+require './thinkphp/start.php';
+
+```
+
+#### 3. 配置config.php默认访问路径
+```
+// 默认模块名
+'default_module'         => 'admin',
+// 禁止访问模块
+'deny_module_list'       => ['common'],
+// 默认控制器名
+'default_controller'     => 'doc',
+// 默认操作名
+'default_action'         => 'apiList',
+// 默认验证器
+'default_validate'       => '',
+// 默认的空控制器名
+'empty_controller'       => 'Error',
+// 操作方法后缀
+'action_suffix'          => '',
+// 自动搜索控制器
+'controller_auto_search' => false,
+```
+
+#### 4. 把对应的文件对应复制到框架下
+
+
+#### 5. 控制器注释
 1，控制器类头加上如下注释
 ```php
 /**
